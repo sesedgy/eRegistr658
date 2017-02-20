@@ -21,16 +21,24 @@ System.register(['@angular/core'], function(exports_1, context_1) {
             RegistrationComponent = (function () {
                 function RegistrationComponent() {
                     this.firstStageVisible = false;
+                    this.secondStageVisible = true;
                     this.chapter = "1";
                 }
                 RegistrationComponent.prototype.firstStageNext = function () {
                     this.firstStageVisible = true;
+                    this.secondStageVisible = false;
                     this.chapter = "2";
+                };
+                RegistrationComponent.prototype.secondStagePrev = function () {
+                    this.firstStageVisible = false;
+                    this.secondStageVisible = true;
+                    this.chapter = "1";
                 };
                 RegistrationComponent = __decorate([
                     core_1.Component({
                         selector: 'registration',
-                        templateUrl: 'app/views/registration.html'
+                        templateUrl: 'app/views/registration.html',
+                        styles: ["\n    .row{margin-right: 0px; margin-left: 0px;}\n    "]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], RegistrationComponent);
