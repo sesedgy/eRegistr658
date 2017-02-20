@@ -1,6 +1,6 @@
 <div class="jumbotron">
-    <fieldset>
-        <form id="firstStage">
+    <fieldset >
+        <form id="firstStage" [hidden]="firstStageVisible">
             <legend>Регистрация этап {{chapter}} из 5</legend>
             <div class="col-lg-4 col-sm-12" >
                 <div class="form-group">
@@ -88,7 +88,7 @@
             <div class="form-group">
                 <div class="col-lg-6 col-lg-offset-6 col-sm-12">
                     <button type="smallFinish" class="btn btn-primary">Отправить предварительную заявку</button>
-                    <button type="nextStage" class="btn btn-primary">Следующий этап</button>
+                    <button type="nextStage" (click)="firstStageNext()" class="btn btn-primary">Следующий этап</button>
                 </div>
             </div>
         </form>

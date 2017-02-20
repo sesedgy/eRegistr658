@@ -20,7 +20,13 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             RegistrationComponent = (function () {
                 function RegistrationComponent() {
+                    this.firstStageVisible = false;
+                    this.chapter = "1";
                 }
+                RegistrationComponent.prototype.firstStageNext = function () {
+                    this.firstStageVisible = true;
+                    this.chapter = "2";
+                };
                 RegistrationComponent = __decorate([
                     core_1.Component({
                         selector: 'registration',

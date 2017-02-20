@@ -8,4 +8,11 @@ import { FormsModule }   from '@angular/forms';
 })
 export class RegistrationComponent {
 
+    firstStageVisible: boolean = false;
+    chapter: string = "1"
+
+    firstStageNext(){
+        this.firstStageVisible =  true;
+        this.chapter = "2";
+    }
 }
