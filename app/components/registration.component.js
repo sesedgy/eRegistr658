@@ -40,6 +40,11 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     this.fifthStageVisible = true;
                     this.chapter = "1";
                 }
+                RegistrationComponent.prototype.ngAfterViewInit = function () {
+                    $("#mobilePhone").mask("+7(999)999-99-99");
+                    $("#mobilePhoneMother").mask("+7(999)999-99-99");
+                    $("#mobilePhoneFather").mask("+7(999)999-99-99");
+                };
                 RegistrationComponent.prototype.firstStageNext = function () {
                     this.firstStageVisible = true;
                     this.secondStageVisible = false;
@@ -86,6 +91,10 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                 RegistrationComponent.prototype.finishRegistration = function () {
                     this.firstStageVisible = true;
                     this.secondStageVisible = false;
+                };
+                RegistrationComponent.prototype.adressLiveCheckBox = function () {
+                };
+                RegistrationComponent.prototype.adressCustomerCheckBox = function () {
                 };
                 RegistrationComponent = __decorate([
                     core_1.Component({

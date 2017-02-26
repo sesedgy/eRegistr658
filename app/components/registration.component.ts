@@ -1,6 +1,8 @@
-import { Component} from '@angular/core';
+import { Component, AfterViewInit} from '@angular/core';
+declare var $:any;
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, NgModel}   from '@angular/forms';
+
 
 export class Abiturient{
     public lastName: string;
@@ -24,7 +26,13 @@ export class Abiturient{
     public cityRegistration: string;
     public regionRegistration: string;
     public districtRegistration: string;
-    public locality: string;
+    public localityRegistration: string;
+    public streetRegistration: string;
+    public houseRegistration: string;
+    public buildingRegistration: string;
+    public housingRegistration: string;
+    public flatRegistration: string;
+    public indexRegistration: string;
 }
 
 export class User{
@@ -46,6 +54,8 @@ export class User{
 })
 export class RegistrationComponent {
 
+
+
     abiturient: Abiturient = new Abiturient();
     firstStageVisible: boolean = false;
     secondStageVisible: boolean = true;
@@ -53,6 +63,12 @@ export class RegistrationComponent {
     fourthStageVisible: boolean = true;
     fifthStageVisible: boolean = true;
     chapter: string = "1"
+
+    ngAfterViewInit() {
+        $("#mobilePhone").mask("+7(999)999-99-99");
+        $("#mobilePhoneMother").mask("+7(999)999-99-99");
+        $("#mobilePhoneFather").mask("+7(999)999-99-99");
+    }
 
     firstStageNext(){
         this.firstStageVisible =  true;
@@ -100,6 +116,14 @@ export class RegistrationComponent {
     finishRegistration(){
         this.firstStageVisible =  true;
         this.secondStageVisible =  false;
+    }
+
+    adressLiveCheckBox(){
+
+    }
+
+    adressCustomerCheckBox(){
+
     }
 
 }
