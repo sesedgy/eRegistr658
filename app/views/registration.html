@@ -373,14 +373,9 @@
                     </div>
                     <legend>Фотография</legend>
                     <div class="col-lg-9 col-md-9 col-sm-12">
+                        <label class="control-label">Размер фотографии не должен превышать 120кб</label>
                         <div class="form-group">
-                            <label class="control-label">Размер фотографии не должен превышать 120кб</label>
-                            <div class="input-group">
-                                <input class="form-control" id="uploadedFileName" name="uploadedFileName" placeholder="Имя файла" disabled="disabled" [(ngModel)]="abiturient.uploadedFileName" #uploadedFileName="ngModel" required>
-                                <span class="input-group-btn">
-                                    <button name="photoUpload" id="photoUpload" class="btn btn-default">Выбрать фото</button>
-                                </span>
-                            </div>
+                            <file-uploader [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-uploader>
                         </div>
                     </div>
                 </div>

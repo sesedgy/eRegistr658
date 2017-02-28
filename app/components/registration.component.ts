@@ -1,7 +1,8 @@
 import { Component, AfterViewInit} from '@angular/core';
-declare var $:any;
+import {FileUploaderComponent} from './file-uploader.component';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, NgModel}   from '@angular/forms';
+declare var $:any;
 
 
 export class Abiturient{
