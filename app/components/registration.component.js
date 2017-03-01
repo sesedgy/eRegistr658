@@ -46,6 +46,14 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                         backdrop: 'static',
                         keyboard: false
                     });
+                    $("#photo").fileinput({
+                        showUpload: false,
+                        language: 'ru',
+                        showRemove: false,
+                        previewFileType: 'text',
+                        allowedFileExtensions: ['jpg', 'jpeg', 'png'],
+                        maxFilePreviewSize: 200
+                    });
                     $("#mobilePhone").mask("+7(999)999-99-99");
                     $("#mobilePhoneMother").mask("+7(999)999-99-99");
                     $("#mobilePhoneFather").mask("+7(999)999-99-99");
@@ -157,7 +165,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     core_1.Component({
                         selector: 'registration',
                         templateUrl: 'app/views/registration.html',
-                        styles: ["\n    .formRegistration {\n        height:620px;\n    }\n    @media (max-width: 1200px){\n    .formRegistration {\n        height:initial;\n    }} \n    .row{margin-right: 0px; margin-left: 0px;}\n    input.ng-touched.ng-invalid {border:solid red 2px;}\n    input.ng-touched.ng-valid {border:solid green 2px;}\n    select.ng-touched.ng-invalid {border:solid red 2px;}\n    select.ng-touched.ng-valid {border:solid green 2px;}\n    "]
+                        styles: ["\n    .formRegistration {\n        height:620px;\n    }\n    @media (max-width: 1200px){\n    .formRegistration {\n        height:initial;\n    }} \n    .row{margin-right: 0px; margin-left: 0px;}\n    input.ng-touched.ng-invalid {border:solid red 2px;}\n    input.ng-touched.ng-valid {border:solid green 2px;}\n    select.ng-touched.ng-invalid {border:solid red 2px;}\n    select.ng-touched.ng-valid {border:solid green 2px;}\n    .red{color: red;}\n    "]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], RegistrationComponent);

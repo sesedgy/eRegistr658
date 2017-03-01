@@ -113,6 +113,7 @@ export class User{
     input.ng-touched.ng-valid {border:solid green 2px;}
     select.ng-touched.ng-invalid {border:solid red 2px;}
     select.ng-touched.ng-valid {border:solid green 2px;}
+    .red{color: red;}
     `]
 })
 export class RegistrationComponent {
@@ -130,7 +131,15 @@ export class RegistrationComponent {
         $('#myModal').modal({
             backdrop: 'static',
             keyboard: false
-        })
+        });
+        $("#photo").fileinput({
+            showUpload:false,
+            language: 'ru',
+            showRemove: false,
+            previewFileType:'text',
+            allowedFileExtensions: ['jpg', 'jpeg', 'png'],
+            maxFilePreviewSize: 200
+        });
         $("#mobilePhone").mask("+7(999)999-99-99");
         $("#mobilePhoneMother").mask("+7(999)999-99-99");
         $("#mobilePhoneFather").mask("+7(999)999-99-99");
