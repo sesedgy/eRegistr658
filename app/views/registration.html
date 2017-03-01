@@ -372,11 +372,9 @@
                         </div>
                     </div>
                     <legend>Фотография</legend>
-                    <div class="col-lg-9 col-md-9 col-sm-12">
-                        <label class="control-label">Размер фотографии не должен превышать 120кб</label>
-                        <div class="form-group">
-                            <file-uploader [activeColor]="'orangered'" [baseColor]="'lightgray'"></file-uploader>
-                        </div>
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <label class="control-label">Выберите файл (размер не должен привышать 120Кб</label>
+                        <input id="fileInput" type="file" class="file" data-show-preview="false">
                     </div>
                 </div>
                 <div [hidden]="fifthStageVisible">
@@ -642,5 +640,39 @@
 
         </form>
     </fieldset>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal" href="http://iuikb.ru" aria-label="Close"><span aria-hidden="true">&times;</span></a>
+                <h4 class="modal-title" id="myModalLabel">Соглашение на обработку персональных данных.</h4>
+            </div>
+            <div class="modal-body">
+                Настоящим, я предоставляю согласие на обработку ФГБОУ ВПО «Академия Государственной противопожарной службы Министерства Российской Федерации по делам гражданской
+                обороны, чрезвычайным ситуациям и ликвидации последствий стихийных бедствий» (ИНН 7717035419 КПП 771701001, 129366 г. Москва, ул. Бориса Галушкина, 4,) моих персональных
+                данных и подтверждаю что, давая такое согласие, я действую своей волей и в своем интересе. В соответствии с Федеральным законом Российской Федерации
+                от 27.07.2006 г. № 152-ФЗ «О персональных данных» я согласен, при необходимости, во время заполнения информации при регистрации в сайте, входе в Личный кабинет или при
+                отправке заявки на участие в сеансе онлайн-связи (вебинаре/ трансляции) предоставить информацию, относящуюся к моей личности, например: мои фамилия, имя, отчество,
+                город проживания, контактный телефон, адрес электронной почты, место работы, должность. Согласие на обработку персональных данных дается мною в целях исполнения предусмотренных
+                законодательством РФ обязательств по оказанию услуг по договору на обучение и в целях получения услуг, оказываемых Академией.
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                 <input class="checkBoxAgreement" type="checkbox" (change)="checkBoxAgreementAccept($event)"> Я принимаю условия данного соглашения
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <a href="http://iuikb.ru" class="btn btn-default" data-dismiss="modal">Назад</a>
+                        <button type="button" [disabled]="isCheckAgreement" data-dismiss="modal" class="btn btn-primary">Перейти к регистрации</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

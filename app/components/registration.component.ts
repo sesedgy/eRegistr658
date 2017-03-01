@@ -107,7 +107,7 @@ export class User{
     @media (max-width: 1200px){
     .formRegistration {
         height:initial;
-    }}  
+    }} 
     .row{margin-right: 0px; margin-left: 0px;}
     input.ng-touched.ng-invalid {border:solid red 2px;}
     input.ng-touched.ng-valid {border:solid green 2px;}
@@ -117,17 +117,20 @@ export class User{
 })
 export class RegistrationComponent {
 
-
-
     abiturient: Abiturient = new Abiturient();
     firstStageVisible: boolean = false;
     secondStageVisible: boolean = true;
     thirdStageVisible: boolean = true;
     fourthStageVisible: boolean = true;
     fifthStageVisible: boolean = true;
+    isCheckAgreement: boolean = true;
     chapter: string = "1"
 
     ngAfterViewInit() {
+        $('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
         $("#mobilePhone").mask("+7(999)999-99-99");
         $("#mobilePhoneMother").mask("+7(999)999-99-99");
         $("#mobilePhoneFather").mask("+7(999)999-99-99");
@@ -234,6 +237,10 @@ export class RegistrationComponent {
             this.abiturient.housingCustomer = "";
             this.abiturient.flatCustomer = "";
         }
+    }
+
+    checkBoxAgreementAccept($event){
+        this.isCheckAgreement = !$event.target.checked;
     }
 
 }

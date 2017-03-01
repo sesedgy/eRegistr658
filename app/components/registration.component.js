@@ -38,9 +38,14 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     this.thirdStageVisible = true;
                     this.fourthStageVisible = true;
                     this.fifthStageVisible = true;
+                    this.isCheckAgreement = true;
                     this.chapter = "1";
                 }
                 RegistrationComponent.prototype.ngAfterViewInit = function () {
+                    $('#myModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
                     $("#mobilePhone").mask("+7(999)999-99-99");
                     $("#mobilePhoneMother").mask("+7(999)999-99-99");
                     $("#mobilePhoneFather").mask("+7(999)999-99-99");
@@ -145,11 +150,14 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                         this.abiturient.flatCustomer = "";
                     }
                 };
+                RegistrationComponent.prototype.checkBoxAgreementAccept = function ($event) {
+                    this.isCheckAgreement = !$event.target.checked;
+                };
                 RegistrationComponent = __decorate([
                     core_1.Component({
                         selector: 'registration',
                         templateUrl: 'app/views/registration.html',
-                        styles: ["\n    .formRegistration {\n        height:620px;\n    }\n    @media (max-width: 1200px){\n    .formRegistration {\n        height:initial;\n    }}  \n    .row{margin-right: 0px; margin-left: 0px;}\n    input.ng-touched.ng-invalid {border:solid red 2px;}\n    input.ng-touched.ng-valid {border:solid green 2px;}\n    select.ng-touched.ng-invalid {border:solid red 2px;}\n    select.ng-touched.ng-valid {border:solid green 2px;}\n    "]
+                        styles: ["\n    .formRegistration {\n        height:620px;\n    }\n    @media (max-width: 1200px){\n    .formRegistration {\n        height:initial;\n    }} \n    .row{margin-right: 0px; margin-left: 0px;}\n    input.ng-touched.ng-invalid {border:solid red 2px;}\n    input.ng-touched.ng-valid {border:solid green 2px;}\n    select.ng-touched.ng-invalid {border:solid red 2px;}\n    select.ng-touched.ng-valid {border:solid green 2px;}\n    "]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], RegistrationComponent);
