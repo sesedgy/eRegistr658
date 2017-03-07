@@ -42,7 +42,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="middleName" class=" control-label">Отчество<span class="red">*</span></label>
-                            <input type="text" class="form-control" id="middleName" name="middleName" [(ngModel)]="abiturient.middleName" #middleName="ngModel" placeholder="Иванович" required>
+                            <input type="text" class="form-control" id="middleName" name="middleName" [(ngModel)]="abiturient.middleName" #middleName="ngModel" placeholder="Иванович">
                         </div>
                         <div class="form-group">
                             <label for="nation" class=" control-label">Национальность<span class="red">*</span></label>
@@ -83,8 +83,22 @@
                     <legend>Личный кабинет</legend>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
+                            <label for="login" class=" control-label">Логин<span class="red">*</span></label>
+                            <input type="email" class="form-control" id="login" name="login" [(ngModel)]="user.login" #login="ngModel" required>
+                            <span class="help-block" [hidden]="loginIsCorrect">Такой логин уже зарегистрирован</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label for="password" class=" control-label">Пароль<span class="red">*</span></label>
+                            <input type="email" class="form-control" id="password" name="password" [(ngModel)]="user.password" #password="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
                             <label for="mobilePhone" class=" control-label">Email<span class="red">*</span></label>
-                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="abiturient.email" #email="ngModel" required>
+                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" #email="ngModel" required>
+                            <span class="help-block" [hidden]="emailIsCorrect">Такой email уже зарегистрирван</span>
                         </div>
                     </div>
                 </div>
@@ -93,8 +107,8 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-5 col-sm-6">
                             <div class="form-group">
-                                <label for="sex" class=" control-label">Тип документа удостоверяющего личность<span class="red">*</span></label>
-                                <select class="form-control" id="typeStudentDocument" name="typeStudentDocument" [(ngModel)]="abiturient.typeStudentDocument" #typeStudentDocument="ngModel" required>
+                                <label for="typeStudentDocument" class=" control-label">Тип документа удостоверяющего личность<span class="red">*</span></label>
+                                <select class="form-control" id="typeStudentDocument" name="typeStudentDocument" required>
                                     <option></option>
                                     <option>Паспорт РФ</option>
                                     <option>Паспорт других государств</option>
@@ -366,8 +380,8 @@
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-12">
                             <div class="form-group">
-                                <label for="whoGiveEducationDocument" class=" control-label">Кем выдан<span class="red">*</span></label>
-                                <input class="form-control" id="whoGiveEducationDocument" name="whoGiveEducationDocument" [(ngModel)]="abiturient.whoGiveEducationDocument" #whoGiveEducationDocument="ngModel" required>
+                                <label for="educationDocumentIssueOrg" class=" control-label">Кем выдан<span class="red">*</span></label>
+                                <input class="form-control" id="educationDocumentIssueOrg" name="educationDocumentIssueOrg" [(ngModel)]="abiturient.educationDocumentIssueOrg" #educationDocumentIssueOrg="ngModel" required>
                             </div>
                         </div>
                     </div>
@@ -401,7 +415,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="middleNameCustomer" class=" control-label">Отчество заказчика<span class="red">*</span></label>
-                                    <input class="form-control" id="middleNameCustomer" name="middleNameCustomer" [(ngModel)]="abiturient.middleNameCustomer" #middleNameCustomer="ngModel" required>
+                                    <input class="form-control" id="middleNameCustomer" name="middleNameCustomer" [(ngModel)]="abiturient.middleNameCustomer" #middleNameCustomer="ngModel">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
@@ -598,27 +612,27 @@
                         </div>
                     </div>
                 </div>
-                    <!--<button id="smallFinish" [hidden]="firstStageVisible" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || middleName.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || email.invalid" (click)="firstStageSmallCard()"  class="btn btn-primary">Отправить предварительную заявку</button>-->
-                    <!--<button id="nextStage1" [hidden]="firstStageVisible" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || middleName.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || email.invalid" (click)="firstStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <!--<button id="smallFinish" [hidden]="firstStageVisible" (click)="firstStageSmallCard()"  class="btn btn-primary" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || login.invalid || password.invalid || email.invalid">Отправить предварительную заявку</button>-->
+                    <!--<button id="nextStage1" [hidden]="firstStageVisible" (click)="firstStageNext()" class="btn btn-primary" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || login.invalid || password.invalid || email.invalid">Следующий этап</button>-->
 
-                    <!--<button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible">Предыдущий этап</button>-->
-                    <!--<button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="typeStudentDocument.invalid || passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || cityRegistration.invalid || regionRegistration.invalid || districtRegistration.invalid || localityRegistration.invalid">Следующий этап</button>-->
+                    <!--<button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="typeStudentDocument.invalid || passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || houseRegistration.invalid || indexRegistration.invalid">Предыдущий этап</button>-->
+                    <!--<button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="typeStudentDocument.invalid || passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || houseRegistration.invalid || indexRegistration.invalid">Следующий этап</button>-->
 
-                    <!--<button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible">Предыдущий этап</button>-->
-                    <!--<button id="nextStage3" [hidden]="thirdStageVisible" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || middleName.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || email.invalid" (click)="thirdStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <!--<button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible" [disabled]="countryLive.invalid || houseLive.invalid || indexLive.invalid">Предыдущий этап</button>-->
+                    <!--<button id="nextStage3" [hidden]="thirdStageVisible" (click)="thirdStageNext()" class="btn btn-primary" [disabled]="countryLive.invalid || houseLive.invalid || indexLive.invalid">Следующий этап</button>-->
 
-                    <!--<button id="prevStage4" [hidden]="fourthStageVisible" (click)="fourthStagePrev()" class="btn btn-primary">Предыдущий этап</button>-->
-                    <!--<button id="nextStage4" [hidden]="fourthStageVisible" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || middleName.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || email.invalid" (click)="fourthStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <!--<button id="prevStage4" [hidden]="fourthStageVisible" (click)="fourthStagePrev()" class="btn btn-primary" [disabled]="levelEducation.invalid || seriesEducationDocument.invalid || numberEducationDocument.invalid || dateEducationDocument.invalid || educationDocumentIssueOrg.invalid">Предыдущий этап</button>-->
+                    <!--<button id="nextStage4" [hidden]="fourthStageVisible" (click)="fourthStageNext()" class="btn btn-primary" [disabled]="levelEducation.invalid || seriesEducationDocument.invalid || numberEducationDocument.invalid || dateEducationDocument.invalid || educationDocumentIssueOrg.invalid">Следующий этап</button>-->
 
                     <!--<button id="prevStage5" [hidden]="fifthStageVisible" (click)="fifthStagePrev()" class="btn btn-primary">Предыдущий этап</button>-->
-                    <!--<button id="finishRegistration" [hidden]="fifthStageVisible" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || middleName.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || email.invalid" (click)="finishRegistration()" class="btn btn-primary">Завершить регистрацию</button>-->
-
+                    <!--<button id="finishRegistration" [hidden]="fifthStageVisible" (click)="finishRegistration()" class="btn btn-primary" [disabled]="lastNameCustomer.invalid || firstNameCustomer.invalid || mobilePhoneCustomer.invalid || passportSeriesCustomer.invalid || passportNumberCustomer.invalid || passportDateCustomer.invalid || passportIssueOrgCustomer.invalid || countryCustomer.invalid || nameOfTheOrganization.invalid-->
+                     <!--|| INN.invalid || KPP.invalid || legalAddress.invalid || actualAddress.invalid || nameOfTheBank.invalid || INNOfTheBank.invalid || BICOfTheBank.invalid || checkingAccount.invalid || correspondingAccount.invalid || FIORepresentative.invalid || phoneOfTheOrganisation.invalid">Завершить регистрацию</button>-->
             </div>
             <div class="row">
-                <div [hidden]="firstStageVisible" class="col-lg-4 col-lg-offset-6 col-md-5 col-md-offset-3 col-sm-12">
+                <div [hidden]="firstStageVisible" class="col-lg-4 col-lg-offset-6 col-md-5 col-md-offset-3 col-sm-7">
                     <button id="smallFinish" [hidden]="firstStageVisible" (click)="firstStageSmallCard()"  class="btn btn-primary">Отправить предварительную заявку</button>
                 </div>
-                <div [hidden]="!firstStageVisible" class="col-lg-2 col-lg-offset-8 col-md-3 col-md-offset-5 col-sm-12">
+                <div [hidden]="!firstStageVisible" class="col-lg-2 col-lg-offset-8 col-md-3 col-md-offset-5 col-sm-7">
                     <button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible">Предыдущий этап</button>
 
                     <button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible">Предыдущий этап</button>
@@ -629,8 +643,9 @@
                 </div>
 
 
-                <div class="col-lg-2 col-md-4 col-sm-12">
-                    <button id="nextStage1" [hidden]="firstStageVisible" (click)="firstStageNext()" class="btn btn-primary">Следующий этап</button>
+                <div class="col-lg-2 col-md-4 col-sm-5">
+                    <!--<button id="nextStage1" [hidden]="firstStageVisible" (click)="firstStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <button id="nextStage1" [hidden]="firstStageVisible" (click)="testRequest()" class="btn btn-primary">Следующий этап</button>
                     <button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" >Следующий этап</button>
                     <button id="nextStage3" [hidden]="thirdStageVisible" (click)="thirdStageNext()" class="btn btn-primary">Следующий этап</button>
                     <button id="nextStage4" [hidden]="fourthStageVisible" (click)="fourthStageNext()" class="btn btn-primary">Следующий этап</button>

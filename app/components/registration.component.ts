@@ -1,101 +1,9 @@
 import { Component, AfterViewInit} from '@angular/core';
-import {FileUploaderComponent} from './file-uploader.component';
-import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, NgModel}   from '@angular/forms';
+import {Abiturient} from "../models/abiturient";
+import {User} from "../models/user";
+import {Response} from "@angular/http";
+import {HttpService} from "../services/http.service";
 declare var $:any;
-
-
-export class Abiturient{
-    public lastName: string;
-    public firstName: string;
-    public middleName: string;
-    public birthDate: string;
-    public mobilePhone: string;
-    public citizenship: string;
-    public sex: string;
-    public nation: string;
-    public specialty: string;
-    public formOfEducation: string;
-    public qualification: string;
-    public email: string;
-    public typeStudentDocument: string;
-    public passportSeries: string;
-    public passportNumber: string;
-    public passportDate: string;
-    public passportIssueOrg: string;
-    public countryRegistration: string;
-    public cityRegistration: string;
-    public regionRegistration: string;
-    public districtRegistration: string;
-    public localityRegistration: string;
-    public streetRegistration: string;
-    public houseRegistration: string;
-    public buildingRegistration: string;
-    public housingRegistration: string;
-    public flatRegistration: string;
-    public indexRegistration: string;
-    public countryLive: string;
-    public cityLive: string;
-    public regionLive: string;
-    public districtLive: string;
-    public localityLive: string;
-    public streetLive: string;
-    public houseLive: string;
-    public buildingLive: string;
-    public housingLive: string;
-    public flatLive: string;
-    public indexLive: string;
-    public lastNameMother: string;
-    public firstNameMother: string;
-    public middleNameMother: string;
-    public mobilePhoneMother: string;
-    public lastNameFather: string;
-    public firstNameFather: string;
-    public middleNameFather: string;
-    public mobilePhoneFather: string;
-    public levelEducation: string;
-    public seriesEducationDocument: string;
-    public numberEducationDocument: string;
-    public dateEducationDocument: string;
-    public whoGiveEducationDocument: string;
-    public uploadedFileName: string;
-    public paymentForm: string;
-    public lastNameCustomer: string;
-    public firstNameCustomer: string;
-    public middleNameCustomer: string;
-    public mobilePhoneCustomer: string;
-    public passportSeriesCustomer: string;
-    public passportNumberCustomer: string;
-    public passportDateCustomer: string;
-    public passportIssueOrgCustomer: string;
-    public countryCustomer: string;
-    public cityCustomer: string;
-    public regionCustomer: string;
-    public districtCustomer: string;
-    public localityCustomer: string;
-    public streetCustomer: string;
-    public houseCustomer: string;
-    public buildingCustomer: string;
-    public housingCustomer: string;
-    public flatCustomer: string;
-    public nameOfTheOrganization: string;
-    public INN: string;
-    public KPP: string;
-    public legalAddress: string;
-    public actualAddress: string;
-    public nameOfTheBank: string;
-    public INNOfTheBank: string;
-    public BICOfTheBank: string;
-    public checkingAccount: string;
-    public correspondingAccount: string;
-    public FIORepresentative: string;
-    public phoneOfTheOrganisation: string;
-
-}
-
-export class User{
-
-}
 
 @Component({
     selector: 'registration',
@@ -114,18 +22,23 @@ export class User{
     select.ng-touched.ng-invalid {border:solid red 2px;}
     select.ng-touched.ng-valid {border:solid green 2px;}
     .red{color: red;}
-    `]
+    `],
+    providers: [HttpService]
 })
 export class RegistrationComponent {
 
+    constructor(private httpService: HttpService){}
     abiturient: Abiturient = new Abiturient();
+    user: User = new User();
+    loginIsCorrect: boolean = true;
+    emailIsCorrect: boolean = true;
     firstStageVisible: boolean = false;
     secondStageVisible: boolean = true;
     thirdStageVisible: boolean = true;
     fourthStageVisible: boolean = true;
     fifthStageVisible: boolean = true;
     isCheckAgreement: boolean = true;
-    chapter: string = "1"
+    chapter: string = "1";
 
     ngAfterViewInit() {
         $('#myModal').modal({
@@ -143,6 +56,19 @@ export class RegistrationComponent {
         $("#mobilePhone").mask("+7(999)999-99-99");
         $("#mobilePhoneMother").mask("+7(999)999-99-99");
         $("#mobilePhoneFather").mask("+7(999)999-99-99");
+    }
+
+    testRequest(){
+        this.httpService.get('users/login=' + this.user.login + '&email=' + this.user.email).subscribe(this.err);
+    }
+
+    err(res:Response){
+        if(res[0]){
+            this.loginIsCorrect = false;
+        }
+        if(res[1]){
+            this.emailIsCorrect = false;
+        }
     }
 
     firstStageNext(){

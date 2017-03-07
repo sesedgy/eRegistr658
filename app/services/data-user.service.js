@@ -25,7 +25,7 @@ System.register(['@angular/core', "../models/user"], function(exports_1, context
                 function DataUserService() {
                 }
                 DataUserService.prototype.getUser = function (id) {
-                    var user = new user_1.User('name', 2);
+                    var user = new user_1.User();
                     return user;
                 };
                 DataUserService.prototype.setUser = function (tokenId) {

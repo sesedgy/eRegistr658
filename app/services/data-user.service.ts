@@ -5,7 +5,7 @@ import {User} from "../models/user";
 export class DataUserService{
 
     getUser(id: string): User{
-        let user = new User('name', 2);
+        let user = new User();
         return user;
     }
 

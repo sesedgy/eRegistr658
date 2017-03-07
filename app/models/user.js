@@ -6,9 +6,7 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             User = (function () {
-                function User(name, price) {
-                    this.name = name;
-                    this.price = price;
+                function User() {
                 }
                 return User;
             }());

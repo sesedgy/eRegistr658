@@ -1,4 +1,4 @@
-System.register(['@angular/core'], function(exports_1, context_1) {
+System.register(['@angular/core', "../models/abiturient", "../models/user", "../services/http.service"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,29 +10,30 @@ System.register(['@angular/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
-    var Abiturient, User, RegistrationComponent;
+    var core_1, abiturient_1, user_1, http_service_1;
+    var RegistrationComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (abiturient_1_1) {
+                abiturient_1 = abiturient_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
+            },
+            function (http_service_1_1) {
+                http_service_1 = http_service_1_1;
             }],
         execute: function() {
-            Abiturient = (function () {
-                function Abiturient() {
-                }
-                return Abiturient;
-            }());
-            exports_1("Abiturient", Abiturient);
-            User = (function () {
-                function User() {
-                }
-                return User;
-            }());
-            exports_1("User", User);
             RegistrationComponent = (function () {
-                function RegistrationComponent() {
-                    this.abiturient = new Abiturient();
+                function RegistrationComponent(httpService) {
+                    this.httpService = httpService;
+                    this.abiturient = new abiturient_1.Abiturient();
+                    this.user = new user_1.User();
+                    this.loginIsCorrect = true;
+                    this.emailIsCorrect = true;
                     this.firstStageVisible = false;
                     this.secondStageVisible = true;
                     this.thirdStageVisible = true;
@@ -57,6 +58,17 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     $("#mobilePhone").mask("+7(999)999-99-99");
                     $("#mobilePhoneMother").mask("+7(999)999-99-99");
                     $("#mobilePhoneFather").mask("+7(999)999-99-99");
+                };
+                RegistrationComponent.prototype.testRequest = function () {
+                    this.httpService.get('users/login=' + this.user.login + '&email=' + this.user.email).subscribe(this.err);
+                };
+                RegistrationComponent.prototype.err = function (res) {
+                    if (res[0]) {
+                        this.loginIsCorrect = false;
+                    }
+                    if (res[1]) {
+                        this.emailIsCorrect = false;
+                    }
                 };
                 RegistrationComponent.prototype.firstStageNext = function () {
                     this.firstStageVisible = true;
@@ -165,9 +177,10 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     core_1.Component({
                         selector: 'registration',
                         templateUrl: 'app/views/registration.html',
-                        styles: ["\n    .formRegistration {\n        height:620px;\n    }\n    @media (max-width: 1200px){\n    .formRegistration {\n        height:initial;\n    }} \n    .row{margin-right: 0px; margin-left: 0px;}\n    input.ng-touched.ng-invalid {border:solid red 2px;}\n    input.ng-touched.ng-valid {border:solid green 2px;}\n    select.ng-touched.ng-invalid {border:solid red 2px;}\n    select.ng-touched.ng-valid {border:solid green 2px;}\n    .red{color: red;}\n    "]
+                        styles: ["\n    .formRegistration {\n        height:620px;\n    }\n    @media (max-width: 1200px){\n    .formRegistration {\n        height:initial;\n    }} \n    .row{margin-right: 0px; margin-left: 0px;}\n    input.ng-touched.ng-invalid {border:solid red 2px;}\n    input.ng-touched.ng-valid {border:solid green 2px;}\n    select.ng-touched.ng-invalid {border:solid red 2px;}\n    select.ng-touched.ng-valid {border:solid green 2px;}\n    .red{color: red;}\n    "],
+                        providers: [http_service_1.HttpService]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [http_service_1.HttpService])
                 ], RegistrationComponent);
                 return RegistrationComponent;
             }());

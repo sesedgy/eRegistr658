@@ -6,12 +6,12 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             Abiturient = (function () {
-                function Abiturient(id, lastName, name, middleName) {
-                    this.id = id;
-                    this.lastName = lastName;
-                    this.name = name;
-                    this.middleName = middleName;
+                function Abiturient() {
                 }
+                Abiturient.prototype.save = function () {
+                    // HTTP request would go here
+                    // console.log(this.name, this.email, this.rating);
+                };
                 return Abiturient;
             }());
             exports_1("Abiturient", Abiturient);

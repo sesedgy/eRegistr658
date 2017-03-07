@@ -4,7 +4,7 @@ import {User} from "../models/user";
 @Injectable()
 export class DataAbiturientService{
 
-    getAbiturient(id: string): User{
+    getAbiturient(id: string): string{
         let cookie = document.cookie;
         if(cookie === ''){
             //TODO Сделать перенаправление на страницу регистрации
