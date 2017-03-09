@@ -30,8 +30,9 @@ export class RegistrationComponent {
     constructor(private httpService: HttpService){}
     abiturient: Abiturient = new Abiturient();
     user: User = new User();
-    loginIsCorrect: boolean = true;
-    emailIsCorrect: boolean = true;
+    photo: File = null;
+    loginIsVisible: boolean = true;
+    emailIsVisible: boolean = true;
     firstStageVisible: boolean = false;
     secondStageVisible: boolean = true;
     thirdStageVisible: boolean = true;
@@ -58,27 +59,22 @@ export class RegistrationComponent {
         $("#mobilePhoneFather").mask("+7(999)999-99-99");
     }
 
-    testRequest(){
-        this.httpService.get('users/login=' + this.user.login + '&email=' + this.user.email).subscribe(this.err);
-    }
-
-    err(res:Response){
-        if(res[0]){
-            this.loginIsCorrect = false;
+    firstStageNextSuccess(body){
+        this.loginIsVisible = !body[0];
+        this.emailIsVisible = !body[1];
+        if(!body[0] || !body[1]){
+            return;
         }
-        if(res[1]){
-            this.emailIsCorrect = false;
-        }
-    }
-
-    firstStageNext(){
         this.firstStageVisible =  true;
         this.secondStageVisible =  false;
         this.chapter = "2";
     }
-    firstStageSmallCard(){
-    //TODO Предварительная заявка
+
+    firstStageNext(){
+        this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(body => this.firstStageNextSuccess(body.json()));
     }
+
+
     secondStagePrev(){
         this.firstStageVisible =  false;
         this.secondStageVisible =  true;
@@ -116,6 +112,12 @@ export class RegistrationComponent {
     }
     finishRegistration(){
         //TODO Отправить заявку заявка
+    }
+
+    takePhotoForRequest(){
+        let formData: FormData = new FormData();
+        formData.append('uploadFile', this.photo, this.photo.name);
+        return formData;
     }
 
     adressLiveCheckBoxFunction($event){

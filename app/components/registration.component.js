@@ -32,8 +32,9 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     this.httpService = httpService;
                     this.abiturient = new abiturient_1.Abiturient();
                     this.user = new user_1.User();
-                    this.loginIsCorrect = true;
-                    this.emailIsCorrect = true;
+                    this.photo = null;
+                    this.loginIsVisible = true;
+                    this.emailIsVisible = true;
                     this.firstStageVisible = false;
                     this.secondStageVisible = true;
                     this.thirdStageVisible = true;
@@ -59,24 +60,19 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     $("#mobilePhoneMother").mask("+7(999)999-99-99");
                     $("#mobilePhoneFather").mask("+7(999)999-99-99");
                 };
-                RegistrationComponent.prototype.testRequest = function () {
-                    this.httpService.get('users/login=' + this.user.login + '&email=' + this.user.email).subscribe(this.err);
-                };
-                RegistrationComponent.prototype.err = function (res) {
-                    if (res[0]) {
-                        this.loginIsCorrect = false;
+                RegistrationComponent.prototype.firstStageNextSuccess = function (body) {
+                    this.loginIsVisible = !body[0];
+                    this.emailIsVisible = !body[1];
+                    if (!body[0] || !body[1]) {
+                        return;
                     }
-                    if (res[1]) {
-                        this.emailIsCorrect = false;
-                    }
-                };
-                RegistrationComponent.prototype.firstStageNext = function () {
                     this.firstStageVisible = true;
                     this.secondStageVisible = false;
                     this.chapter = "2";
                 };
-                RegistrationComponent.prototype.firstStageSmallCard = function () {
-                    //TODO Предварительная заявка
+                RegistrationComponent.prototype.firstStageNext = function () {
+                    var _this = this;
+                    this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(function (body) { return _this.firstStageNextSuccess(body.json()); });
                 };
                 RegistrationComponent.prototype.secondStagePrev = function () {
                     this.firstStageVisible = false;
@@ -115,6 +111,11 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                 };
                 RegistrationComponent.prototype.finishRegistration = function () {
                     //TODO Отправить заявку заявка
+                };
+                RegistrationComponent.prototype.takePhotoForRequest = function () {
+                    var formData = new FormData();
+                    formData.append('uploadFile', this.photo, this.photo.name);
+                    return formData;
                 };
                 RegistrationComponent.prototype.adressLiveCheckBoxFunction = function ($event) {
                     if ($event.target.checked) {

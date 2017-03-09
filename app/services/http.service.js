@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/http', "../appSettings"], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', "../appSettings", 'rxjs/add/operator/map', 'rxjs/add/operator/catch'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -22,7 +22,9 @@ System.register(['@angular/core', '@angular/http', "../appSettings"], function(e
             },
             function (appSettings_1_1) {
                 appSettings_1 = appSettings_1_1;
-            }],
+            },
+            function (_1) {},
+            function (_2) {}],
         execute: function() {
             HttpService = (function () {
                 function HttpService(http) {
@@ -37,6 +39,7 @@ System.register(['@angular/core', '@angular/http', "../appSettings"], function(e
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=utf-8' });
                     return this.http.post(this.urlServer + urlApi, body, { headers: headers })
                         .map(function (resp) { return resp.json(); });
+                    // .catch((error:any) =>{return Observable.throw(error);});
                 };
                 HttpService = __decorate([
                     core_1.Injectable(), 
