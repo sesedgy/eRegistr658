@@ -35,15 +35,28 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     this.photo = null;
                     this.loginIsVisible = true;
                     this.emailIsVisible = true;
-                    this.firstStageVisible = false;
+                    this.firstStageHidden = false;
                     this.secondStageVisible = true;
                     this.thirdStageVisible = true;
                     this.fourthStageVisible = true;
                     this.fifthStageVisible = true;
                     this.isCheckAgreement = true;
+                    this.isPhysicalCustomerDisable = false;
                     this.chapter = "1";
                 }
                 RegistrationComponent.prototype.ngAfterViewInit = function () {
+                    var _this = this;
+                    this.httpService.get('specialties/getAll').subscribe(function (body) {
+                        _this.allSpecialtyObjects = body.json();
+                        var specialityObjectsForEach = [];
+                        specialityObjectsForEach.push("");
+                        _this.allSpecialtyObjects.forEach(function (item) {
+                            if (specialityObjectsForEach.indexOf(item.nameSpecialty) === -1) {
+                                specialityObjectsForEach.push(item.nameSpecialty);
+                            }
+                        });
+                        _this.specialtyObjects = specialityObjectsForEach;
+                    });
                     $('#myModal').modal({
                         backdrop: 'static',
                         keyboard: false
@@ -59,6 +72,11 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     $("#mobilePhone").mask("+7(999)999-99-99");
                     $("#mobilePhoneMother").mask("+7(999)999-99-99");
                     $("#mobilePhoneFather").mask("+7(999)999-99-99");
+                    $("#phoneOfTheOrganisation").mask("+7(999)999-99-99");
+                };
+                RegistrationComponent.prototype.firstStageNext = function () {
+                    var _this = this;
+                    this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(function (body) { return _this.firstStageNextSuccess(body.json()); });
                 };
                 RegistrationComponent.prototype.firstStageNextSuccess = function (body) {
                     this.loginIsVisible = !body[0];
@@ -66,16 +84,12 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     if (!body[0] || !body[1]) {
                         return;
                     }
-                    this.firstStageVisible = true;
+                    this.firstStageHidden = true;
                     this.secondStageVisible = false;
                     this.chapter = "2";
                 };
-                RegistrationComponent.prototype.firstStageNext = function () {
-                    var _this = this;
-                    this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(function (body) { return _this.firstStageNextSuccess(body.json()); });
-                };
                 RegistrationComponent.prototype.secondStagePrev = function () {
-                    this.firstStageVisible = false;
+                    this.firstStageHidden = false;
                     this.secondStageVisible = true;
                     this.chapter = "1";
                 };
@@ -111,6 +125,14 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                 };
                 RegistrationComponent.prototype.finishRegistration = function () {
                     //TODO Отправить заявку заявка
+                    this.abiturient.id = this.guid();
+                    this.user.id = this.guid();
+                    this.abiturient.userId = this.user.id;
+                    this.user.idClient = this.abiturient.id;
+                    this.abiturient.createdDate = new Date().toUTCString();
+                    this.user.createdDate = new Date().toUTCString();
+                    var requestBody = [this.user, this.abiturient, this.takePhotoForRequest];
+                    this.httpService.post('api/abiturients/create', requestBody);
                 };
                 RegistrationComponent.prototype.takePhotoForRequest = function () {
                     var formData = new FormData();
@@ -173,6 +195,43 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                 };
                 RegistrationComponent.prototype.checkBoxAgreementAccept = function ($event) {
                     this.isCheckAgreement = !$event.target.checked;
+                };
+                RegistrationComponent.prototype.specialtyChange = function () {
+                    var formOfEducationObjectsForEach = [];
+                    var selectedSpecialty = this.abiturient.specialty;
+                    this.allSpecialtyObjects.forEach(function (item) {
+                        if (selectedSpecialty === item.nameSpecialty) {
+                            if (formOfEducationObjectsForEach.indexOf(item.formOfEducation) === -1) {
+                                formOfEducationObjectsForEach.push(item.formOfEducation);
+                            }
+                        }
+                    });
+                    this.formOfEducationObjects = formOfEducationObjectsForEach;
+                };
+                RegistrationComponent.prototype.formOfEducationChange = function () {
+                    var qualificationObjectsForEach = [];
+                    var selectedSpecialty = this.abiturient.specialty;
+                    var selectedFormOfEducation = this.abiturient.formOfEducation;
+                    this.allSpecialtyObjects.forEach(function (item) {
+                        if (selectedSpecialty === item.nameSpecialty && selectedFormOfEducation === item.formOfEducation) {
+                            if (qualificationObjectsForEach.indexOf(item.qualification) === -1) {
+                                qualificationObjectsForEach.push(item.qualification);
+                            }
+                        }
+                    });
+                    this.qualificationObjects = qualificationObjectsForEach;
+                };
+                RegistrationComponent.prototype.paymentFormChange = function ($event) {
+                    this.isPhysicalCustomerDisable = $event.target.value === "Юридическое лицо";
+                };
+                RegistrationComponent.prototype.guid = function () {
+                    function s4() {
+                        return Math.floor((1 + Math.random()) * 0x10000)
+                            .toString(16)
+                            .substring(1);
+                    }
+                    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                        s4() + '-' + s4() + s4() + s4();
                 };
                 RegistrationComponent = __decorate([
                     core_1.Component({

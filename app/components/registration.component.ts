@@ -3,6 +3,8 @@ import {Abiturient} from "../models/abiturient";
 import {User} from "../models/user";
 import {Response} from "@angular/http";
 import {HttpService} from "../services/http.service";
+import {forEach} from "@angular/router/src/utils/collection";
+import {Specialty} from "../models/specialty";
 declare var $:any;
 
 @Component({
@@ -25,6 +27,7 @@ declare var $:any;
     `],
     providers: [HttpService]
 })
+
 export class RegistrationComponent {
 
     constructor(private httpService: HttpService){}
@@ -33,15 +36,33 @@ export class RegistrationComponent {
     photo: File = null;
     loginIsVisible: boolean = true;
     emailIsVisible: boolean = true;
-    firstStageVisible: boolean = false;
+    firstStageHidden: boolean = false;
     secondStageVisible: boolean = true;
     thirdStageVisible: boolean = true;
     fourthStageVisible: boolean = true;
     fifthStageVisible: boolean = true;
     isCheckAgreement: boolean = true;
+    isPhysicalCustomerDisable: boolean = false;
     chapter: string = "1";
+    allSpecialtyObjects: Specialty[];
+    specialtyObjects: string[];
+    formOfEducationObjects: string[];
+    qualificationObjects: string[];
 
     ngAfterViewInit() {
+        this.httpService.get('specialties/getAll').subscribe(body => {
+            this.allSpecialtyObjects = body.json();
+            let specialityObjectsForEach = [];
+            specialityObjectsForEach.push("");
+            this.allSpecialtyObjects.forEach(function(item){
+                if(specialityObjectsForEach.indexOf(item.nameSpecialty) === -1)
+                {
+                    specialityObjectsForEach.push(item.nameSpecialty);
+                }
+            });
+            this.specialtyObjects = specialityObjectsForEach;
+        });
+
         $('#myModal').modal({
             backdrop: 'static',
             keyboard: false
@@ -57,6 +78,11 @@ export class RegistrationComponent {
         $("#mobilePhone").mask("+7(999)999-99-99");
         $("#mobilePhoneMother").mask("+7(999)999-99-99");
         $("#mobilePhoneFather").mask("+7(999)999-99-99");
+        $("#phoneOfTheOrganisation").mask("+7(999)999-99-99");
+    }
+
+    firstStageNext(){
+        this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(body => this.firstStageNextSuccess(body.json()));
     }
 
     firstStageNextSuccess(body){
@@ -65,53 +91,64 @@ export class RegistrationComponent {
         if(!body[0] || !body[1]){
             return;
         }
-        this.firstStageVisible =  true;
+        this.firstStageHidden =  true;
         this.secondStageVisible =  false;
         this.chapter = "2";
     }
 
-    firstStageNext(){
-        this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(body => this.firstStageNextSuccess(body.json()));
-    }
-
-
     secondStagePrev(){
-        this.firstStageVisible =  false;
+        this.firstStageHidden =  false;
         this.secondStageVisible =  true;
         this.chapter = "1";
     }
+
     secondStageNext(){
         this.secondStageVisible =  true;
         this.thirdStageVisible =  false;
         this.chapter = "3";
     }
+
     thirdStagePrev(){
         this.secondStageVisible =  false;
         this.thirdStageVisible =  true;
         this.chapter = "2";
     }
+
     thirdStageNext(){
         this.thirdStageVisible =  true;
         this.fourthStageVisible =  false;
         this.chapter = "4";
     }
+
     fourthStagePrev(){
         this.thirdStageVisible =  false;
         this.fourthStageVisible =  true;
         this.chapter = "3";
     }
+
     fourthStageNext(){
         this.fourthStageVisible =  true;
         this.fifthStageVisible =  false;
         this.chapter = "5";
     }
+
     fifthStagePrev(){
         this.fourthStageVisible =  false;
         this.fifthStageVisible =  true;
         this.chapter = "4";
     }
+
     finishRegistration(){
         //TODO Отправить заявку заявка
+        this.abiturient.id = this.guid();
+        this.user.id = this.guid();
+        this.abiturient.userId = this.user.id;
+        this.user.idClient = this.abiturient.id;
+        this.abiturient.createdDate = new Date().toUTCString();
+        this.user.createdDate = new Date().toUTCString();
+
+        let requestBody = [this.user, this.abiturient, this.takePhotoForRequest];
+        this.httpService.post('api/abiturients/create', requestBody);
     }
 
     takePhotoForRequest(){
@@ -179,5 +216,49 @@ export class RegistrationComponent {
     checkBoxAgreementAccept($event){
         this.isCheckAgreement = !$event.target.checked;
     }
+
+    specialtyChange(){
+        let formOfEducationObjectsForEach = [];
+        let selectedSpecialty = this.abiturient.specialty;
+        this.allSpecialtyObjects.forEach(function (item){
+           if(selectedSpecialty === item.nameSpecialty){
+               if(formOfEducationObjectsForEach.indexOf(item.formOfEducation) === -1)
+               {
+                   formOfEducationObjectsForEach.push(item.formOfEducation);
+               }
+           }
+        });
+        this.formOfEducationObjects = formOfEducationObjectsForEach;
+    }
+
+    formOfEducationChange(){
+        let qualificationObjectsForEach = [];
+        let selectedSpecialty = this.abiturient.specialty;
+        let selectedFormOfEducation = this.abiturient.formOfEducation;
+        this.allSpecialtyObjects.forEach(function (item){
+           if(selectedSpecialty === item.nameSpecialty && selectedFormOfEducation === item.formOfEducation){
+               if(qualificationObjectsForEach.indexOf(item.qualification) === -1)
+               {
+                   qualificationObjectsForEach.push(item.qualification);
+               }
+           }
+        });
+        this.qualificationObjects = qualificationObjectsForEach;
+    }
+
+    paymentFormChange($event){
+        this.isPhysicalCustomerDisable = $event.target.value === "Юридическое лицо";
+    }
+
+    guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    }
+
 
 }

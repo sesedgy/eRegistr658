@@ -3,7 +3,7 @@
         <form>
             <div class="row formRegistration">
                 <legend>Регистрация этап {{chapter}} из 5</legend>
-                <div [hidden]="firstStageVisible">
+                <div [hidden]="firstStageHidden">
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="lastName" class=" control-label">Фамилия<span class="red">*</span></label>
@@ -13,11 +13,15 @@
                             <label for="citizenship" class=" control-label">Гражданство<span class="red">*</span></label>
                             <select class="form-control" id="citizenship" name="citizenship" [(ngModel)]="abiturient.citizenship" #citizenship="ngModel" required>
                                 <option></option>
+                                <option>РФ</option>
+                                <option>Украина</option>
+                                <option>Беларусь</option>
+                                <option>Другое</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="birthDate" class=" control-label">Дата рождения<span class="red">*</span></label>
-                            <input type="date" class="form-control" id="birthDate" name="birthDate" [(ngModel)]="abiturient.birthDate" #birthDate="ngModel" placeholder="01.01.1999" required>
+                            <input type="date" class="form-control" id="birthDate" name="birthDate" [(ngModel)]="abiturient.birthDate" #birthDate="ngModel" required>
                         </div>
 
                     </div>
@@ -49,6 +53,26 @@
                             <select class="form-control" id="nation" name="nation" [(ngModel)]="abiturient.nation" #nation="ngModel" required>
                                 <option></option>
                                 <option>Русский(ая)</option>
+                                <option>Беларус(ка)</option>
+                                <option>Украинец(ка)</option>
+                                <option>Азербайджанец(ка)</option>
+                                <option>Армянин(ка)</option>
+                                <option>Башкир(ка)</option>
+                                <option>Бурят(ка)</option>
+                                <option>Ингуш(ка)</option>
+                                <option>Кабардинец(ка)</option>
+                                <option>Казах(чка)</option>
+                                <option>Калмык(чка)</option>
+                                <option>Киргиз(ка)</option>
+                                <option>Лезгин(ка)</option>
+                                <option>Осетин(ка)</option>
+                                <option>Таджик(чка)</option>
+                                <option>Татарин(ка)</option>
+                                <option>Узбек(чка)</option>
+                                <option>Чеченец(ка)</option>
+                                <option>Чуваш(ка)</option>
+                                <option>Якут(ка)</option>
+                                <option>Другое</option>
                             </select>
                         </div>
                     </div>
@@ -56,27 +80,24 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="nation" class=" control-label">Направление подготовки(специальность)<span class="red">*</span></label>
-                            <select class="form-control" id="specialty" name="specialty" [(ngModel)]="abiturient.specialty" #specialty="ngModel" required>
-                                <option></option>
-                                <option>Пожарная безопасность</option>
+                            <select class="form-control" id="specialty" name="specialty" (change)="specialtyChange()" [(ngModel)]="abiturient.specialty" #specialty="ngModel" required>
+                                <option [ngValue]="i" *ngFor="let i of specialtyObjects">{{i}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="nation" class=" control-label">Форма обучения<span class="red">*</span></label>
-                            <select class="form-control" id="formOfEducation" name="formOfEducation" [(ngModel)]="abiturient.formOfEducation" #formOfEducation="ngModel" required>
-                                <option></option>
-                                <option>Очная</option>
+                            <select class="form-control" id="formOfEducation" name="formOfEducation" (change)="formOfEducationChange()" [(ngModel)]="abiturient.formOfEducation" #formOfEducation="ngModel" required>
+                                <option [ngValue]="i" *ngFor="let i of formOfEducationObjects">{{i}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label for="nation" class=" control-label">Квалификация<span class="red">*</span></label>
+                            <label for="qualification" class=" control-label">Квалификация<span class="red">*</span></label>
                             <select class="form-control" id="qualification" name="qualification" [(ngModel)]="abiturient.qualification" #qualification="ngModel" required>
-                                <option></option>
-                                <option>Специалист</option>
+                                <option [ngValue]="i" *ngFor="let i of qualificationObjects">{{i}}</option>
                             </select>
                         </div>
                     </div>
@@ -84,19 +105,19 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="login" class=" control-label">Логин<span class="red">*</span></label>
-                            <input type="email" class="form-control" id="login" name="login" [(ngModel)]="user.login" #login="ngModel" required>
+                            <input type="text" class="form-control" id="login" name="login" [(ngModel)]="user.login" #login="ngModel" required>
                             <span class="help-block" style="color:red" [hidden]="loginIsVisible">Такой логин уже зарегистрирован</span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label for="password" class=" control-label">Пароль<span class="red">*</span></label>
-                            <input type="email" class="form-control" id="password" name="password" [(ngModel)]="user.password" #password="ngModel" required>
+                            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" #password="ngModel" required>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label for="mobilePhone" class=" control-label">Email<span class="red">*</span></label>
+                            <label for="email" class=" control-label">Email<span class="red">*</span></label>
                             <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" #email="ngModel" required>
                             <span class="help-block" style="color:red" [hidden]="emailIsVisible">Такой email уже зарегистрирван</span>
                         </div>
@@ -108,7 +129,7 @@
                         <div class="col-lg-5 col-md-5 col-sm-6">
                             <div class="form-group">
                                 <label for="typeStudentDocument" class=" control-label">Тип документа удостоверяющего личность<span class="red">*</span></label>
-                                <select class="form-control" id="typeStudentDocument" name="typeStudentDocument" required>
+                                <select class="form-control" id="typeStudentDocument" name="typeStudentDocument">
                                     <option></option>
                                     <option>Паспорт РФ</option>
                                     <option>Паспорт других государств</option>
@@ -181,37 +202,37 @@
                         <div class="col-lg-3 col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label for="streetRegistration" class=" control-label">Улица</label>
-                                <input class="form-control" id="streetRegistration" name="streetRegistration" [(ngModel)]="abiturient.streetRegistration" #streetRegistration="ngModel" placeholder="Россия">
+                                <input type="text" class="form-control" id="streetRegistration" name="streetRegistration" [(ngModel)]="abiturient.streetRegistration" #streetRegistration="ngModel" placeholder="Арбатская">
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-6">
                             <div class="form-group">
                                 <label for="houseRegistration" class=" control-label">Дом<span class="red">*</span></label>
-                                <input type="text" class="form-control" id="houseRegistration" name="houseRegistration" [(ngModel)]="abiturient.houseRegistration" #houseRegistration="ngModel" required placeholder="Москва">
+                                <input type="text" class="form-control" id="houseRegistration" name="houseRegistration" [(ngModel)]="abiturient.houseRegistration" #houseRegistration="ngModel" placeholder="5" required>
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6">
                             <div class="form-group">
                                 <label for="buildingRegistration" class=" control-label">Строение</label>
-                                <input type="text" class="form-control" id="buildingRegistration" name="buildingRegistration" [(ngModel)]="abiturient.buildingRegistration" #buildingRegistration="ngModel" placeholder="Московская область">
+                                <input type="text" class="form-control" id="buildingRegistration" name="buildingRegistration" [(ngModel)]="abiturient.buildingRegistration" #buildingRegistration="ngModel" placeholder="2">
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-6">
                             <div class="form-group">
                                 <label for="housingRegistration" class=" control-label">Корпус</label>
-                                <input class="form-control" id="housingRegistration" name="housingRegistration" [(ngModel)]="abiturient.housingRegistration" #housingRegistration="ngModel" placeholder="Дмитровский район">
+                                <input type="text" class="form-control" id="housingRegistration" name="housingRegistration" [(ngModel)]="abiturient.housingRegistration" #housingRegistration="ngModel" placeholder="2">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6">
                             <div class="form-group">
                                 <label for="flatRegistration" class=" control-label">Квартира</label>
-                                <input type="text" class="form-control" id="flatRegistration" name="flatRegistration" [(ngModel)]="abiturient.flatRegistration" #flatRegistration="ngModel" placeholder="пос. Луговой">
+                                <input type="text" class="form-control" id="flatRegistration" name="flatRegistration" [(ngModel)]="abiturient.flatRegistration" #flatRegistration="ngModel" placeholder="25">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label for="indexRegistration" class=" control-label">Индекс<span class="red">*</span></label>
-                                <input type="text" class="form-control" id="indexRegistration" name="indexRegistration" [(ngModel)]="abiturient.indexRegistration" #indexRegistration="ngModel" required placeholder="пос. Луговой">
+                                <input type="text" class="form-control" id="indexRegistration" name="indexRegistration" [(ngModel)]="abiturient.indexRegistration" #indexRegistration="ngModel" required placeholder="117623">
                             </div>
                         </div>
                     </div>
@@ -259,37 +280,37 @@
                         <div class="col-lg-3 col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label for="streetLive" class=" control-label">Улица</label>
-                                <input class="form-control" id="streetLive" name="streetLive" [(ngModel)]="abiturient.streetLive" #streetLive="ngModel" placeholder="Россия">
+                                <input class="form-control" id="streetLive" name="streetLive" [(ngModel)]="abiturient.streetLive" #streetLive="ngModel" placeholder="Арбатская">
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-6">
                             <div class="form-group">
                                 <label for="houseLive" class=" control-label">Дом<span class="red">*</span></label>
-                                <input type="text" class="form-control" id="houseLive" name="houseLive" [(ngModel)]="abiturient.houseLive" #houseLive="ngModel" required placeholder="Москва">
+                                <input type="text" class="form-control" id="houseLive" name="houseLive" [(ngModel)]="abiturient.houseLive" #houseLive="ngModel" required placeholder="5">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6">
                             <div class="form-group">
                                 <label for="buildingLive" class=" control-label">Строение</label>
-                                <input type="text" class="form-control" id="buildingLive" name="buildingLive" [(ngModel)]="abiturient.buildingLive" #buildingLive="ngModel" placeholder="Московская область">
+                                <input type="text" class="form-control" id="buildingLive" name="buildingLive" [(ngModel)]="abiturient.buildingLive" #buildingLive="ngModel" placeholder="2">
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-6">
                             <div class="form-group">
                                 <label for="housingLive" class=" control-label">Корпус</label>
-                                <input class="form-control" id="housingLive" name="housingLive" [(ngModel)]="abiturient.housingLive" #housingLive="ngModel" placeholder="Дмитровский район">
+                                <input type="text" class="form-control" id="housingLive" name="housingLive" [(ngModel)]="abiturient.housingLive" #housingLive="ngModel" placeholder="2">
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6">
                             <div class="form-group">
                                 <label for="flatLive" class=" control-label">Квартира</label>
-                                <input type="text" class="form-control" id="flatLive" name="flatLive" [(ngModel)]="abiturient.flatLive" #flatLive="ngModel" placeholder="пос. Луговой">
+                                <input type="text" class="form-control" id="flatLive" name="flatLive" [(ngModel)]="abiturient.flatLive" #flatLive="ngModel" placeholder="25">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-6">
                             <div class="form-group">
                                 <label for="indexLive" class=" control-label">Индекс<span class="red">*</span></label>
-                                <input type="text" class="form-control" id="indexLive" name="indexLive" [(ngModel)]="abiturient.indexLive" #indexLive="ngModel" required placeholder="пос. Луговой">
+                                <input type="text" class="form-control" id="indexLive" name="indexLive" [(ngModel)]="abiturient.indexLive" #indexLive="ngModel" required placeholder="117623">
                             </div>
                         </div>
                     </div>
@@ -297,19 +318,19 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="lastNameMother" class=" control-label">Фамлиия</label>
-                            <input class="form-control" id="lastNameMother" name="lastNameMother" [(ngModel)]="abiturient.lastNameMother" #lastNameMother="ngModel">
+                            <input class="form-control" id="lastNameMother" name="lastNameMother" [(ngModel)]="abiturient.lastNameMother" #lastNameMother="ngModel" placeholder="Петрова">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="firstNameMother" class=" control-label">Имя</label>
-                            <input class="form-control" id="firstNameMother" name="firstNameMother" [(ngModel)]="abiturient.firstNameMother" #firstNameMother="ngModel">
+                            <input class="form-control" id="firstNameMother" name="firstNameMother" [(ngModel)]="abiturient.firstNameMother" #firstNameMother="ngModel" placeholder="Анна">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="middleNameMother" class=" control-label">Отчество</label>
-                            <input class="form-control" id="middleNameMother" name="middleNameMother" [(ngModel)]="abiturient.middleNameMother" #middleNameMother="ngModel">
+                            <input class="form-control" id="middleNameMother" name="middleNameMother" [(ngModel)]="abiturient.middleNameMother" #middleNameMother="ngModel" placeholder="Ивановна">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
@@ -322,19 +343,19 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="lastNameFather" class=" control-label">Фамлиия</label>
-                            <input class="form-control" id="lastNameFather" name="lastNameFather" [(ngModel)]="abiturient.lastNameFather" #lastNameFather="ngModel">
+                            <input class="form-control" id="lastNameFather" name="lastNameFather" [(ngModel)]="abiturient.lastNameFather" #lastNameFather="ngModel" placeholder="Иванов">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="firstNameFather" class=" control-label">Имя</label>
-                            <input class="form-control" id="firstNameFather" name="firstNameFather" [(ngModel)]="abiturient.firstNameFather" #firstNameFather="ngModel">
+                            <input class="form-control" id="firstNameFather" name="firstNameFather" [(ngModel)]="abiturient.firstNameFather" #firstNameFather="ngModel" placeholder="Иван">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="middleNameFather" class=" control-label">Отчество</label>
-                            <input class="form-control" id="middleNameFather" name="middleNameFather" [(ngModel)]="abiturient.middleNameFather" #middleNameFather="ngModel">
+                            <input class="form-control" id="middleNameFather" name="middleNameFather" [(ngModel)]="abiturient.middleNameFather" #middleNameFather="ngModel" placeholder="Петрович">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-6">
@@ -393,7 +414,7 @@
                 </div>
                 <div [hidden]="fifthStageVisible">
                     <legend>Форма оплаты
-                        <select class="form-control" id="paymentForm" name="paymentForm" [(ngModel)]="abiturient.paymentForm" #paymentForm="ngModel" required>
+                        <select class="form-control" id="paymentForm" name="paymentForm" (change)="paymentFormChange($event)" [(ngModel)]="abiturient.paymentForm" #paymentForm="ngModel" required>
                             <option>Физическое лицо</option>
                             <option>Юридическое лицо</option>
                         </select>
@@ -403,25 +424,25 @@
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="lastNameCustomer" class=" control-label">Фамлиия заказчика<span class="red">*</span></label>
-                                    <input class="form-control" id="lastNameCustomer" name="lastNameCustomer" [(ngModel)]="abiturient.lastNameCustomer" #lastNameCustomer="ngModel" required>
+                                    <input class="form-control" id="lastNameCustomer" name="lastNameCustomer" [(ngModel)]="abiturient.lastNameCustomer" #lastNameCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="Иванов">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="firstNameCustomer" class=" control-label">Имя заказчика<span class="red">*</span></label>
-                                    <input class="form-control" id="firstNameCustomer" name="firstNameCustomer" [(ngModel)]="abiturient.firstNameCustomer" #firstNameCustomer="ngModel" required>
+                                    <input class="form-control" id="firstNameCustomer" name="firstNameCustomer" [(ngModel)]="abiturient.firstNameCustomer" #firstNameCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="Иван">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="middleNameCustomer" class=" control-label">Отчество заказчика<span class="red">*</span></label>
-                                    <input class="form-control" id="middleNameCustomer" name="middleNameCustomer" [(ngModel)]="abiturient.middleNameCustomer" #middleNameCustomer="ngModel">
+                                    <input class="form-control" id="middleNameCustomer" name="middleNameCustomer" [(ngModel)]="abiturient.middleNameCustomer" #middleNameCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="Петрович">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="mobilePhoneCustomer" class=" control-label">Мобильный телефон заказчика<span class="red">*</span></label>
-                                    <input class="form-control" id="mobilePhoneCustomer" name="mobilePhoneCustomer" [(ngModel)]="abiturient.mobilePhoneCustomer" #mobilePhoneCustomer="ngModel" required>
+                                    <input class="form-control" id="mobilePhoneCustomer" name="mobilePhoneCustomer" [(ngModel)]="abiturient.mobilePhoneCustomer" #mobilePhoneCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required>
                                 </div>
                             </div>
                         </div>
@@ -430,19 +451,19 @@
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="passportSeriesCustomer" class=" control-label">Серия<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="passportSeriesCustomer" name="passportSeriesCustomer" [(ngModel)]="abiturient.passportSeriesCustomer" #passportSeriesCustomer="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="passportSeriesCustomer" name="passportSeriesCustomer" [(ngModel)]="abiturient.passportSeriesCustomer" #passportSeriesCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="4512">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="passportNumberCustomer" class=" control-label">Номер<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="passportNumberCustomer" name="passportNumberCustomer" [(ngModel)]="abiturient.passportNumberCustomer" #passportNumberCustomer="ngModel" required placeholder="123456">
+                                    <input type="text" class="form-control" id="passportNumberCustomer" name="passportNumberCustomer" [(ngModel)]="abiturient.passportNumberCustomer" #passportNumberCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="123456">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="passportDateCustomer" class=" control-label">Дата выдачи<span class="red">*</span></label>
-                                    <input type="date" class="form-control" id="passportDateCustomer" name="passportDateCustomer" [(ngModel)]="abiturient.passportDateCustomer" #passportDateCustomer="ngModel" required>
+                                    <input type="date" class="form-control" id="passportDateCustomer" name="passportDateCustomer" [(ngModel)]="abiturient.passportDateCustomer" #passportDateCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required>
                                 </div>
                             </div>
                         </div>
@@ -450,7 +471,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="passportIssueOrgCustomer" class=" control-label">Кем выдан<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="passportIssueOrgCustomer" name="passportIssueOrgCustomer" [(ngModel)]="abiturient.passportIssueOrgCustomer" #passportIssueOrgCustomer="ngModel" required
+                                    <input type="text" class="form-control" id="passportIssueOrgCustomer" name="passportIssueOrgCustomer" [(ngModel)]="abiturient.passportIssueOrgCustomer" #passportIssueOrgCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required
                                            placeholder="ОУФМС России по г.Москве">
                                 </div>
                             </div>
@@ -458,38 +479,38 @@
                         <legend>Адрес регистрации заказчика</legend>
                         <div class="checkbox">
                             <label>
-                                <input name="adressCustomerCheckBox" id="adressCustomerCheckBox" (change)="adressCustomerCheckBoxFunction($event)" type="checkbox"> Совпадает с адресом регистрации
+                                <input name="adressCustomerCheckBox" id="adressCustomerCheckBox" (change)="adressCustomerCheckBoxFunction($event)" [disabled]="isPhysicalCustomerDisable" type="checkbox"> Совпадает с адресом регистрации
                             </label>
                         </div>
                         <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label for="countryCustomer" class=" control-label">Страна<span class="red">*</span></label>
-                                    <input class="form-control" id="countryCustomer" name="countryCustomer" [(ngModel)]="abiturient.countryCustomer" #countryCustomer="ngModel" required placeholder="Россия">
+                                    <input class="form-control" id="countryCustomer" name="countryCustomer" [(ngModel)]="abiturient.countryCustomer" #countryCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="Россия">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label for="cityCustomer" class=" control-label">Город</label>
-                                    <input type="text" class="form-control" id="cityCustomer" name="cityCustomer" [(ngModel)]="abiturient.cityCustomer" #cityCustomer="ngModel" placeholder="Москва">
+                                    <input type="text" class="form-control" id="cityCustomer" name="cityCustomer" [(ngModel)]="abiturient.cityCustomer" #cityCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="Москва">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="regionCustomer" class=" control-label">Регион</label>
-                                    <input type="text" class="form-control" id="regionCustomer" name="regionCustomer" [(ngModel)]="abiturient.regionCustomer" #regionCustomer="ngModel" placeholder="Московская область">
+                                    <input type="text" class="form-control" id="regionCustomer" name="regionCustomer" [(ngModel)]="abiturient.regionCustomer" #regionCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="Московская область">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="districtCustomer" class=" control-label">Район</label>
-                                    <input class="form-control" id="districtCustomer" name="districtCustomer" [(ngModel)]="abiturient.districtCustomer" #districtCustomer="ngModel" placeholder="Дмитровский район">
+                                    <input class="form-control" id="districtCustomer" name="districtCustomer" [(ngModel)]="abiturient.districtCustomer" #districtCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="Дмитровский район">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label for="localityCustomer" class=" control-label">Населенный пункт</label>
-                                    <input type="text" class="form-control" id="localityCustomer" name="localityCustomer" [(ngModel)]="abiturient.localityCustomer" #localityCustomer="ngModel" placeholder="пос. Луговой">
+                                    <input type="text" class="form-control" id="localityCustomer" name="localityCustomer" [(ngModel)]="abiturient.localityCustomer" #localityCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="пос. Луговой">
                                 </div>
                             </div>
                         </div>
@@ -497,31 +518,31 @@
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="streetCustomer" class=" control-label">Улица</label>
-                                    <input class="form-control" id="streetCustomer" name="streetCustomer" [(ngModel)]="abiturient.streetCustomer" #streetCustomer="ngModel" placeholder="Россия">
+                                    <input class="form-control" id="streetCustomer" name="streetCustomer" [(ngModel)]="abiturient.streetCustomer" #streetCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="Арбатская">
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-6">
                                 <div class="form-group">
                                     <label for="houseCustomer" class=" control-label">Дом<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="houseCustomer" name="houseCustomer" [(ngModel)]="abiturient.houseCustomer" #houseCustomer="ngModel" required placeholder="Москва">
+                                    <input type="text" class="form-control" id="houseCustomer" name="houseCustomer" [(ngModel)]="abiturient.houseCustomer" #houseCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="5">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label for="buildingCustomer" class=" control-label">Строение</label>
-                                    <input type="text" class="form-control" id="buildingCustomer" name="buildingCustomer" [(ngModel)]="abiturient.buildingCustomer" #buildingCustomer="ngModel" placeholder="Московская область">
+                                    <input type="text" class="form-control" id="buildingCustomer" name="buildingCustomer" [(ngModel)]="abiturient.buildingCustomer" #buildingCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="2">
                                 </div>
                             </div>
                             <div class="col-lg-1 col-md-1 col-sm-6">
                                 <div class="form-group">
                                     <label for="housingCustomer" class=" control-label">Корпус</label>
-                                    <input class="form-control" id="housingCustomer" name="housingCustomer" [(ngModel)]="abiturient.housingCustomer" #housingCustomer="ngModel" placeholder="Дмитровский район">
+                                    <input class="form-control" id="housingCustomer" name="housingCustomer" [(ngModel)]="abiturient.housingCustomer" #housingCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="2">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label for="flatCustomer" class=" control-label">Квартира</label>
-                                    <input type="text" class="form-control" id="flatCustomer" name="flatCustomer" [(ngModel)]="abiturient.flatCustomer" #flatCustomer="ngModel" placeholder="пос. Луговой">
+                                    <input type="text" class="form-control" id="flatCustomer" name="flatCustomer" [(ngModel)]="abiturient.flatCustomer" #flatCustomer="ngModel" [disabled]="isPhysicalCustomerDisable" placeholder="25">
                                 </div>
                             </div>
                         </div>
@@ -531,19 +552,19 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="nameOfTheOrganization" class=" control-label">Наименование организации<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="nameOfTheOrganization" name="nameOfTheOrganization" [(ngModel)]="abiturient.nameOfTheOrganization" #nameOfTheOrganization="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="nameOfTheOrganization" name="nameOfTheOrganization" [(ngModel)]="abiturient.nameOfTheOrganization" #nameOfTheOrganization="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder='ООО "Рога и копыта"'>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="INN" class=" control-label">ИНН<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="INN" name="INN" [(ngModel)]="abiturient.INN" #INN="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="INN" name="INN" [(ngModel)]="abiturient.INN" #INN="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="500100732259">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="KPP" class=" control-label">КПП<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="KPP" name="KPP" [(ngModel)]="abiturient.KPP" #KPP="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="KPP" name="KPP" [(ngModel)]="abiturient.KPP" #KPP="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="773301001">
                                 </div>
                             </div>
                         </div>
@@ -551,13 +572,13 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="legalAddress" class=" control-label">Юридический адрес<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="legalAddress" name="legalAddress" [(ngModel)]="abiturient.legalAddress" #legalAddress="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="legalAddress" name="legalAddress" [(ngModel)]="abiturient.legalAddress" #legalAddress="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="г. Москва,ул. Арбат, д.23">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="actualAddress" class=" control-label">Фактический адрес<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="actualAddress" name="actualAddress" [(ngModel)]="abiturient.actualAddress" #actualAddress="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="actualAddress" name="actualAddress" [(ngModel)]="abiturient.actualAddress" #actualAddress="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="г. Москва,ул. Арбат, д.23">
                                 </div>
                             </div>
 
@@ -566,19 +587,19 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="nameOfTheBank" class=" control-label">Наименование банка<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="nameOfTheBank" name="nameOfTheBank" [(ngModel)]="abiturient.nameOfTheBank" #nameOfTheBank="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="nameOfTheBank" name="nameOfTheBank" [(ngModel)]="abiturient.nameOfTheBank" #nameOfTheBank="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder='ОАО "Сбербанк"'>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="INNOfTheBank" class=" control-label">ИНН банка<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="INNOfTheBank" name="INNOfTheBank" [(ngModel)]="abiturient.INNOfTheBank" #INNOfTheBank="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="INNOfTheBank" name="INNOfTheBank" [(ngModel)]="abiturient.INNOfTheBank" #INNOfTheBank="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="7707083893">
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label for="BICOfTheBank" class=" control-label">БИК банка<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="BICOfTheBank" name="BICOfTheBank" [(ngModel)]="abiturient.BICOfTheBank" #BICOfTheBank="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="BICOfTheBank" name="BICOfTheBank" [(ngModel)]="abiturient.BICOfTheBank" #BICOfTheBank="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="773601001">
                                 </div>
                             </div>
                         </div>
@@ -586,72 +607,75 @@
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="checkingAccount" class=" control-label">Расчетный счет<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="checkingAccount" name="checkingAccount" [(ngModel)]="abiturient.checkingAccount" #checkingAccount="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="checkingAccount" name="checkingAccount" [(ngModel)]="abiturient.checkingAccount" #checkingAccount="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="30301810000006000001">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="correspondingAccount" class=" control-label">Корреспондирующий счет<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="correspondingAccount" name="correspondingAccount" [(ngModel)]="abiturient.correspondingAccount" #correspondingAccount="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="correspondingAccount" name="correspondingAccount" [(ngModel)]="abiturient.correspondingAccount" #correspondingAccount="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="30101810400000000225 ">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    <label for="FIORepresentative" class=" control-label">ФИО представителя<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="FIORepresentative" name="FIORepresentative" [(ngModel)]="abiturient.FIORepresentative" #FIORepresentative="ngModel" required placeholder="4512">
+                                    <label for="FIORepresentative" class=" control-label">ФИО представителя орг.<span class="red">*</span></label>
+                                    <input type="text" class="form-control" id="FIORepresentative" name="FIORepresentative" [(ngModel)]="abiturient.FIORepresentative" #FIORepresentative="ngModel" [disabled]="isPhysicalCustomerDisable" required placeholder="Петров Алексей Анатольевич">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="phoneOfTheOrganisation" class=" control-label">Телефон организации<span class="red">*</span></label>
-                                    <input type="text" class="form-control" id="phoneOfTheOrganisation" name="phoneOfTheOrganisation" [(ngModel)]="abiturient.phoneOfTheOrganisation" #phoneOfTheOrganisation="ngModel" required placeholder="4512">
+                                    <input type="text" class="form-control" id="phoneOfTheOrganisation" name="phoneOfTheOrganisation" [(ngModel)]="abiturient.phoneOfTheOrganisation" #phoneOfTheOrganisation="ngModel" [disabled]="isPhysicalCustomerDisable" required>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    <!--<button id="smallFinish" [hidden]="firstStageVisible" (click)="firstStageSmallCard()"  class="btn btn-primary" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || login.invalid || password.invalid || email.invalid">Отправить предварительную заявку</button>-->
-                    <!--<button id="nextStage1" [hidden]="firstStageVisible" (click)="firstStageNext()" class="btn btn-primary" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || login.invalid || password.invalid || email.invalid">Следующий этап</button>-->
-
-                    <!--<button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="typeStudentDocument.invalid || passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || houseRegistration.invalid || indexRegistration.invalid">Предыдущий этап</button>-->
-                    <!--<button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="typeStudentDocument.invalid || passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || houseRegistration.invalid || indexRegistration.invalid">Следующий этап</button>-->
-
-                    <!--<button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible" [disabled]="countryLive.invalid || houseLive.invalid || indexLive.invalid">Предыдущий этап</button>-->
-                    <!--<button id="nextStage3" [hidden]="thirdStageVisible" (click)="thirdStageNext()" class="btn btn-primary" [disabled]="countryLive.invalid || houseLive.invalid || indexLive.invalid">Следующий этап</button>-->
-
-                    <!--<button id="prevStage4" [hidden]="fourthStageVisible" (click)="fourthStagePrev()" class="btn btn-primary" [disabled]="levelEducation.invalid || seriesEducationDocument.invalid || numberEducationDocument.invalid || dateEducationDocument.invalid || educationDocumentIssueOrg.invalid">Предыдущий этап</button>-->
-                    <!--<button id="nextStage4" [hidden]="fourthStageVisible" (click)="fourthStageNext()" class="btn btn-primary" [disabled]="levelEducation.invalid || seriesEducationDocument.invalid || numberEducationDocument.invalid || dateEducationDocument.invalid || educationDocumentIssueOrg.invalid">Следующий этап</button>-->
-
-                    <!--<button id="prevStage5" [hidden]="fifthStageVisible" (click)="fifthStagePrev()" class="btn btn-primary">Предыдущий этап</button>-->
-                    <!--<button id="finishRegistration" [hidden]="fifthStageVisible" (click)="finishRegistration()" class="btn btn-primary" [disabled]="lastNameCustomer.invalid || firstNameCustomer.invalid || mobilePhoneCustomer.invalid || passportSeriesCustomer.invalid || passportNumberCustomer.invalid || passportDateCustomer.invalid || passportIssueOrgCustomer.invalid || countryCustomer.invalid || nameOfTheOrganization.invalid-->
-                     <!--|| INN.invalid || KPP.invalid || legalAddress.invalid || actualAddress.invalid || nameOfTheBank.invalid || INNOfTheBank.invalid || BICOfTheBank.invalid || checkingAccount.invalid || correspondingAccount.invalid || FIORepresentative.invalid || phoneOfTheOrganisation.invalid">Завершить регистрацию</button>-->
             </div>
             <div class="row">
-                <div [hidden]="firstStageVisible" class="col-lg-4 col-lg-offset-6 col-md-5 col-md-offset-3 col-sm-7">
-                    <!--<button id="smallFinish" [hidden]="firstStageVisible" (click)="firstStageSmallCard()"  class="btn btn-primary">Отправить предварительную заявку</button>-->
+                <div [hidden]="firstStageHidden" class="col-lg-4 col-lg-offset-6 col-md-5 col-md-offset-3 col-sm-7">
+                    <!--<button id="smallFinish" [hidden]="firstStageHidden" (click)="firstStageSmallCard()"  class="btn btn-primary" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || login.invalid || password.invalid || email.invalid">Отправить предварительную заявку</button>-->
                 </div>
-                <div [hidden]="!firstStageVisible" class="col-lg-2 col-lg-offset-8 col-md-3 col-md-offset-5 col-sm-7">
-                    <button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible">Предыдущий этап</button>
-
-                    <button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible">Предыдущий этап</button>
-
-                    <button id="prevStage4" [hidden]="fourthStageVisible" (click)="fourthStagePrev()" class="btn btn-primary">Предыдущий этап</button>
-
+                <div [hidden]="!firstStageHidden" class="col-lg-2 col-lg-offset-8 col-md-3 col-md-offset-5 col-sm-7">
+                    <button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || houseRegistration.invalid || indexRegistration.invalid">Предыдущий этап</button>
+                    <button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible" [disabled]="countryLive.invalid || houseLive.invalid || indexLive.invalid">Предыдущий этап</button>
+                    <button id="prevStage4" [hidden]="fourthStageVisible" (click)="fourthStagePrev()" class="btn btn-primary" [disabled]="levelEducation.invalid || seriesEducationDocument.invalid || numberEducationDocument.invalid || dateEducationDocument.invalid || educationDocumentIssueOrg.invalid">Предыдущий этап</button>
                     <button id="prevStage5" [hidden]="fifthStageVisible" (click)="fifthStagePrev()" class="btn btn-primary">Предыдущий этап</button>
                 </div>
-
-
                 <div class="col-lg-2 col-md-4 col-sm-5">
-                    <button id="nextStage1" [hidden]="firstStageVisible" (click)="firstStageNext()" class="btn btn-primary">Следующий этап</button>
-                    <button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" >Следующий этап</button>
-                    <button id="nextStage3" [hidden]="thirdStageVisible" (click)="thirdStageNext()" class="btn btn-primary">Следующий этап</button>
-                    <button id="nextStage4" [hidden]="fourthStageVisible" (click)="fourthStageNext()" class="btn btn-primary">Следующий этап</button>
-                    <button id="finishRegistration" [hidden]="fifthStageVisible" (click)="finishRegistration()" class="btn btn-primary">Завершить регистрацию</button>
+                    <button id="nextStage1" [hidden]="firstStageHidden" (click)="firstStageNext()" class="btn btn-primary" [disabled]="lastName.invalid || citizenship.invalid || birthDate.invalid || firstName.invalid || sex.invalid || mobilePhone.invalid || nation.invalid || specialty.invalid || formOfEducation.invalid || qualification.invalid || login.invalid || password.invalid || email.invalid">Следующий этап</button>
+                    <button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" [disabled]="passportSeries.invalid || passportNumber.invalid || passportDate.invalid || passportIssueOrg.invalid || countryRegistration.invalid || houseRegistration.invalid || indexRegistration.invalid">Следующий этап</button>
+                    <button id="nextStage3" [hidden]="thirdStageVisible" (click)="thirdStageNext()" class="btn btn-primary" [disabled]="countryLive.invalid || houseLive.invalid || indexLive.invalid">Следующий этап</button>
+                    <button id="nextStage4" [hidden]="fourthStageVisible" (click)="fourthStageNext()" class="btn btn-primary" [disabled]="levelEducation.invalid || seriesEducationDocument.invalid || numberEducationDocument.invalid || dateEducationDocument.invalid || educationDocumentIssueOrg.invalid">Следующий этап</button>
+                    <button id="finishRegistration" [hidden]="fifthStageVisible" (click)="finishRegistration()" class="btn btn-primary" [disabled]="lastNameCustomer.invalid || firstNameCustomer.invalid || mobilePhoneCustomer.invalid || passportSeriesCustomer.invalid || passportNumberCustomer.invalid || passportDateCustomer.invalid || passportIssueOrgCustomer.invalid || countryCustomer.invalid || nameOfTheOrganization.invalid
+                    || INN.invalid || KPP.invalid || legalAddress.invalid || actualAddress.invalid || nameOfTheBank.invalid || INNOfTheBank.invalid || BICOfTheBank.invalid || checkingAccount.invalid || correspondingAccount.invalid || FIORepresentative.invalid || phoneOfTheOrganisation.invalid">Завершить регистрацию</button>
                 </div>
-            </div>
 
+                <!--<div [hidden]="firstStageHidden" class="col-lg-4 col-lg-offset-6 col-md-5 col-md-offset-3 col-sm-7">-->
+                    <!--&lt;!&ndash;<button id="smallFinish" [hidden]="firstStageHidden" (click)="firstStageSmallCard()"  class="btn btn-primary">Отправить предварительную заявку</button>&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div [hidden]="!firstStageHidden" class="col-lg-2 col-lg-offset-8 col-md-3 col-md-offset-5 col-sm-7">-->
+                    <!--<button id="prevStage2"  (click)="secondStagePrev()" class="btn btn-primary" [hidden]="secondStageVisible">Предыдущий этап</button>-->
+
+                    <!--<button id="prevStage3"  (click)="thirdStagePrev()" class="btn btn-primary" [hidden]="thirdStageVisible">Предыдущий этап</button>-->
+
+                    <!--<button id="prevStage4" [hidden]="fourthStageVisible" (click)="fourthStagePrev()" class="btn btn-primary">Предыдущий этап</button>-->
+
+                    <!--<button id="prevStage5" [hidden]="fifthStageVisible" (click)="fifthStagePrev()" class="btn btn-primary">Предыдущий этап</button>-->
+                <!--</div>-->
+
+
+                <!--<div class="col-lg-2 col-md-4 col-sm-5">-->
+                    <!--<button id="nextStage1" [hidden]="firstStageHidden" (click)="firstStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <!--<button id="nextStage2"  (click)="secondStageNext()" class="btn btn-primary" [hidden]="secondStageVisible" >Следующий этап</button>-->
+                    <!--<button id="nextStage3" [hidden]="thirdStageVisible" (click)="thirdStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <!--<button id="nextStage4" [hidden]="fourthStageVisible" (click)="fourthStageNext()" class="btn btn-primary">Следующий этап</button>-->
+                    <!--<button id="finishRegistration" [hidden]="fifthStageVisible" (click)="finishRegistration()" class="btn btn-primary">Завершить регистрацию</button>-->
+                <!--</div>-->
+
+            </div>
         </form>
     </fieldset>
 </div>
