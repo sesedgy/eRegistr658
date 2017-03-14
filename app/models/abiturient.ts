@@ -5,6 +5,9 @@ export class Abiturient{
     public lastName: string;
     public firstName: string;
     public middleName: string;
+    public lastNameDP: string;
+    public firstNameDP: string;
+    public middleNameDP: string;
     public birthDate: string;
     public mobilePhone: string;
     public citizenship: string;
@@ -84,7 +87,18 @@ export class Abiturient{
     public correspondingAccount: string;
     public FIORepresentative: string;
     public phoneOfTheOrganisation: string;
-    public whoUpdate: string;
+    public certificateOfMilitarySeries: string;
+    public certificateOfMilitaryNumber: string;
+    public certificateOfMilitaryOffice: string;
+    public militaryTicketSeries: string;
+    public militaryTicketNumber: string;
+    public militaryTicketWhenGive: string;
+    public militaryTicketWhoGive: string;
+    public militaryTicketRank: string;
+    public militaryTicketCodeVus: string;
+    public militaryTicketMilitaryOffice: string;
+
+public whoUpdate: string;
     public createdDate: string;
     public updatedDate: string;
 

@@ -1,11 +1,9 @@
-import { Component, AfterViewInit} from '@angular/core';
+import { Component} from '@angular/core';
 import {Abiturient} from "../models/abiturient";
 import {User} from "../models/user";
-import {Response} from "@angular/http";
 import {HttpService} from "../services/http.service";
-import {forEach} from "@angular/router/src/utils/collection";
 import {Specialty} from "../models/specialty";
-declare var $:any;
+declare let $:any;
 
 @Component({
     selector: 'registration',
@@ -34,16 +32,21 @@ export class RegistrationComponent {
     abiturient: Abiturient = new Abiturient();
     user: User = new User();
     photo: File = null;
+    isMilitary: string;
+    abiturientIsMale: boolean = false;
     loginIsVisible: boolean = true;
     emailIsVisible: boolean = true;
     firstStageHidden: boolean = false;
-    secondStageVisible: boolean = true;
-    thirdStageVisible: boolean = true;
-    fourthStageVisible: boolean = true;
-    fifthStageVisible: boolean = true;
+    secondStageHidden: boolean = true;
+    thirdStageHidden: boolean = true;
+    fourthStageHidden: boolean = true;
+    fifthStageHidden: boolean = true;
+    sixthStageHidden: boolean = true;
     isCheckAgreement: boolean = true;
     isPhysicalCustomerDisable: boolean = false;
+    isMilitaryTicketDisable: boolean = true;
     chapter: string = "1";
+    chapterTotal: string = "5";
     allSpecialtyObjects: Specialty[];
     specialtyObjects: string[];
     formOfEducationObjects: string[];
@@ -92,50 +95,63 @@ export class RegistrationComponent {
             return;
         }
         this.firstStageHidden =  true;
-        this.secondStageVisible =  false;
+        this.secondStageHidden =  false;
         this.chapter = "2";
     }
 
     secondStagePrev(){
         this.firstStageHidden =  false;
-        this.secondStageVisible =  true;
+        this.secondStageHidden =  true;
         this.chapter = "1";
     }
 
     secondStageNext(){
-        this.secondStageVisible =  true;
-        this.thirdStageVisible =  false;
+        this.secondStageHidden =  true;
+        this.thirdStageHidden =  false;
         this.chapter = "3";
     }
 
     thirdStagePrev(){
-        this.secondStageVisible =  false;
-        this.thirdStageVisible =  true;
+        this.secondStageHidden =  false;
+        this.thirdStageHidden =  true;
         this.chapter = "2";
     }
 
     thirdStageNext(){
-        this.thirdStageVisible =  true;
-        this.fourthStageVisible =  false;
+        this.thirdStageHidden =  true;
+        this.fourthStageHidden =  false;
         this.chapter = "4";
     }
 
     fourthStagePrev(){
-        this.thirdStageVisible =  false;
-        this.fourthStageVisible =  true;
+        this.thirdStageHidden =  false;
+        this.fourthStageHidden =  true;
         this.chapter = "3";
     }
 
     fourthStageNext(){
-        this.fourthStageVisible =  true;
-        this.fifthStageVisible =  false;
+        this.fourthStageHidden =  true;
+        this.fifthStageHidden =  false;
         this.chapter = "5";
     }
 
     fifthStagePrev(){
-        this.fourthStageVisible =  false;
-        this.fifthStageVisible =  true;
+        this.fourthStageHidden =  false;
+        this.fifthStageHidden =  true;
         this.chapter = "4";
+    }
+
+    fifthStageNext(){
+        this.fifthStageHidden =  true;
+        this.sixthStageHidden =  false;
+        this.abiturientIsMale = false;
+        this.chapter = "6";
+    }
+
+    sixthStagePrev(){
+        this.fifthStageHidden =  false;
+        this.sixthStageHidden =  true;
+        this.chapter = "5";
     }
 
     finishRegistration(){
@@ -215,6 +231,20 @@ export class RegistrationComponent {
 
     checkBoxAgreementAccept($event){
         this.isCheckAgreement = !$event.target.checked;
+    }
+
+    isMilitaryChange(){
+        if(this.isMilitary == "Да"){
+            this.chapterTotal = "6";
+            this.abiturientIsMale = true;
+        }else{
+            this.chapterTotal = "5";
+            this.abiturientIsMale = false;
+        }
+    }
+
+    militaryDocumentChange($event){
+        this.isMilitaryTicketDisable = $event.target.value === "Военный билет";
     }
 
     specialtyChange(){

@@ -33,16 +33,20 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     this.abiturient = new abiturient_1.Abiturient();
                     this.user = new user_1.User();
                     this.photo = null;
+                    this.abiturientIsMale = false;
                     this.loginIsVisible = true;
                     this.emailIsVisible = true;
                     this.firstStageHidden = false;
-                    this.secondStageVisible = true;
-                    this.thirdStageVisible = true;
-                    this.fourthStageVisible = true;
-                    this.fifthStageVisible = true;
+                    this.secondStageHidden = true;
+                    this.thirdStageHidden = true;
+                    this.fourthStageHidden = true;
+                    this.fifthStageHidden = true;
+                    this.sixthStageHidden = true;
                     this.isCheckAgreement = true;
                     this.isPhysicalCustomerDisable = false;
+                    this.isMilitaryTicketDisable = true;
                     this.chapter = "1";
+                    this.chapterTotal = "5";
                 }
                 RegistrationComponent.prototype.ngAfterViewInit = function () {
                     var _this = this;
@@ -85,43 +89,54 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                         return;
                     }
                     this.firstStageHidden = true;
-                    this.secondStageVisible = false;
+                    this.secondStageHidden = false;
                     this.chapter = "2";
                 };
                 RegistrationComponent.prototype.secondStagePrev = function () {
                     this.firstStageHidden = false;
-                    this.secondStageVisible = true;
+                    this.secondStageHidden = true;
                     this.chapter = "1";
                 };
                 RegistrationComponent.prototype.secondStageNext = function () {
-                    this.secondStageVisible = true;
-                    this.thirdStageVisible = false;
+                    this.secondStageHidden = true;
+                    this.thirdStageHidden = false;
                     this.chapter = "3";
                 };
                 RegistrationComponent.prototype.thirdStagePrev = function () {
-                    this.secondStageVisible = false;
-                    this.thirdStageVisible = true;
+                    this.secondStageHidden = false;
+                    this.thirdStageHidden = true;
                     this.chapter = "2";
                 };
                 RegistrationComponent.prototype.thirdStageNext = function () {
-                    this.thirdStageVisible = true;
-                    this.fourthStageVisible = false;
+                    this.thirdStageHidden = true;
+                    this.fourthStageHidden = false;
                     this.chapter = "4";
                 };
                 RegistrationComponent.prototype.fourthStagePrev = function () {
-                    this.thirdStageVisible = false;
-                    this.fourthStageVisible = true;
+                    this.thirdStageHidden = false;
+                    this.fourthStageHidden = true;
                     this.chapter = "3";
                 };
                 RegistrationComponent.prototype.fourthStageNext = function () {
-                    this.fourthStageVisible = true;
-                    this.fifthStageVisible = false;
+                    this.fourthStageHidden = true;
+                    this.fifthStageHidden = false;
                     this.chapter = "5";
                 };
                 RegistrationComponent.prototype.fifthStagePrev = function () {
-                    this.fourthStageVisible = false;
-                    this.fifthStageVisible = true;
+                    this.fourthStageHidden = false;
+                    this.fifthStageHidden = true;
                     this.chapter = "4";
+                };
+                RegistrationComponent.prototype.fifthStageNext = function () {
+                    this.fifthStageHidden = true;
+                    this.sixthStageHidden = false;
+                    this.abiturientIsMale = false;
+                    this.chapter = "6";
+                };
+                RegistrationComponent.prototype.sixthStagePrev = function () {
+                    this.fifthStageHidden = false;
+                    this.sixthStageHidden = true;
+                    this.chapter = "5";
                 };
                 RegistrationComponent.prototype.finishRegistration = function () {
                     //TODO Отправить заявку заявка
@@ -195,6 +210,19 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                 };
                 RegistrationComponent.prototype.checkBoxAgreementAccept = function ($event) {
                     this.isCheckAgreement = !$event.target.checked;
+                };
+                RegistrationComponent.prototype.isMilitaryChange = function () {
+                    if (this.isMilitary == "Да") {
+                        this.chapterTotal = "6";
+                        this.abiturientIsMale = true;
+                    }
+                    else {
+                        this.chapterTotal = "5";
+                        this.abiturientIsMale = false;
+                    }
+                };
+                RegistrationComponent.prototype.militaryDocumentChange = function ($event) {
+                    this.isMilitaryTicketDisable = $event.target.value === "Военный билет";
                 };
                 RegistrationComponent.prototype.specialtyChange = function () {
                     var formOfEducationObjectsForEach = [];
