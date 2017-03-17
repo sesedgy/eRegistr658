@@ -34,8 +34,8 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     this.user = new user_1.User();
                     this.photo = null;
                     this.abiturientIsMale = false;
-                    this.loginIsVisible = true;
-                    this.emailIsVisible = true;
+                    this.loginIsHidden = true;
+                    this.emailIsHidden = true;
                     this.firstStageHidden = false;
                     this.secondStageHidden = true;
                     this.thirdStageHidden = true;
@@ -71,7 +71,7 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                         showRemove: false,
                         previewFileType: 'text',
                         allowedFileExtensions: ['jpg', 'jpeg', 'png'],
-                        maxFilePreviewSize: 200
+                        maxFileSize: 200
                     });
                     $("#mobilePhone").mask("+7(999)999-99-99");
                     $("#mobilePhoneMother").mask("+7(999)999-99-99");
@@ -83,8 +83,8 @@ System.register(['@angular/core', "../models/abiturient", "../models/user", "../
                     this.httpService.get('users/isLoginAndEmailFree/' + this.user.login + '&' + this.user.email).subscribe(function (body) { return _this.firstStageNextSuccess(body.json()); });
                 };
                 RegistrationComponent.prototype.firstStageNextSuccess = function (body) {
-                    this.loginIsVisible = !body[0];
-                    this.emailIsVisible = !body[1];
+                    this.loginIsHidden = body[0];
+                    this.emailIsHidden = body[1];
                     if (!body[0] || !body[1]) {
                         return;
                     }

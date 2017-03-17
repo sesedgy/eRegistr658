@@ -34,8 +34,8 @@ export class RegistrationComponent {
     photo: File = null;
     isMilitary: string;
     abiturientIsMale: boolean = false;
-    loginIsVisible: boolean = true;
-    emailIsVisible: boolean = true;
+    loginIsHidden: boolean = true;
+    emailIsHidden: boolean = true;
     firstStageHidden: boolean = false;
     secondStageHidden: boolean = true;
     thirdStageHidden: boolean = true;
@@ -76,7 +76,7 @@ export class RegistrationComponent {
             showRemove: false,
             previewFileType:'text',
             allowedFileExtensions: ['jpg', 'jpeg', 'png'],
-            maxFilePreviewSize: 200
+            maxFileSize: 200
         });
         $("#mobilePhone").mask("+7(999)999-99-99");
         $("#mobilePhoneMother").mask("+7(999)999-99-99");
@@ -89,8 +89,8 @@ export class RegistrationComponent {
     }
 
     firstStageNextSuccess(body){
-        this.loginIsVisible = !body[0];
-        this.emailIsVisible = !body[1];
+        this.loginIsHidden = body[0];
+        this.emailIsHidden = body[1];
         if(!body[0] || !body[1]){
             return;
         }
